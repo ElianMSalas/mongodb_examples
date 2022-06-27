@@ -1,0 +1,237 @@
+//Crear base de datos y colección con nombres indicados.
+// use EVA3
+// db.createCollection("profesionales")
+db.profesionales.insertMany([
+	{
+		_id:1, 
+		estructura: [ { profesional : [ { pack1:[{ nombre:"ROBERTO", apellido:"REYES" }] }, 
+                                    { pack2:[{ edad:35, sexo:"M", nacionalidad:"CHILENA" }] } ] } ], 
+		estudios: [ { titulos : [{ nombre: ["ANALISTA PROGRAMADOR","INGENIERIA EN INFORMATICA"] }] } ],
+		certificaciones: [ { preparacion : [{ nombre: ["OJA","OCA","OCP"] }]  } ],
+		especialidad:[ { detalle:["ORACLE DB","DESARROLLO EN JAVA"] }, { cantidad:2 } ], 
+		detalles: [ { años_estudio:6, experiencia:10 } ]
+	},
+	{
+		_id:2, 
+		estructura: [ { profesional : [ { pack1:[{ nombre:"MABEL", apellido:"ORTEGA" }] }, 
+                                    { pack2:[{ edad:22, sexo:"F", nacionalidad:"ARGENTINA" }] } ] } ], 
+		estudios: [ { titulos : [{ nombre: ["ANALISTA PROGRAMADOR"] }] } ],
+		certificaciones: [ { preparacion : [{ nombre: ["JAVA SE"] }]  } ],
+		especialidad:[ { detalle:["DESARROLLO EN JAVA"] }, { cantidad:1 } ], 
+		detalles: [ { años_estudio:2, experiencia:1 } ]
+	},
+	{
+		_id:3, 
+		estructura: [ { profesional : [ { pack1:[{ nombre:"CARLA", apellido:"FUENTES" }] }, 
+                                    { pack2:[{ edad:27, sexo:"F", nacionalidad:"CHILENA" }] } ] } ], 
+		estudios: [ { titulos : [{ nombre: ["INGENIERIA EN INFORMATICA"] }] } ],
+		certificaciones: [ { preparacion : [{ nombre: ["ZEND PHP","LARAVEL","SPRING PROFESSIONAL"] }]  } ],
+		especialidad:[ { detalle:["DESARROLLO EN PHP CON FRAMEWORK","MYSQL"] }, { cantidad:2 } ], 
+		detalles: [ { años_estudio:4, experiencia:5 } ]
+	},
+	{
+		_id:4, 
+		estructura: [ { profesional : [ { pack1:[{ nombre:"ALBERTO", apellido:"DONOSO" }] }, 
+                                      { pack2:[{ edad:21, sexo:"M", nacionalidad:"PERUANA" }] } ] } ], 
+		estudios: [ { titulos : [{ nombre: ["ANALISTA PROGRAMADOR"] }] } ],
+		certificaciones: [ { preparacion : [{ nombre: ["NO APLICA"] }]  } ],
+		especialidad:[ { detalle:["DESARROLLO EN PHP"] }, { cantidad:1 } ], 
+		detalles: [ { años_estudio:2, experiencia:0 } ]
+	},
+	{
+		_id:5, 
+		estructura: [ { profesional : [ { pack1:[{ nombre:"CATALINA", apellido:"SANCHEZ" }] }, 
+                                    { pack2:[{ edad:30, sexo:"F", nacionalidad:"PERUANA" }] } ] } ], 
+		estudios: [ { titulos : [{ nombre: ["ANALISTA PROGRAMADOR","INGENIERIA EN INFORMATICA"] }] } ],
+		certificaciones: [ { preparacion : [{ nombre: ["OJA","LARAVEL"] }]  } ],
+		especialidad:[ { detalle:["MYSQL","JAVA","PHP",".NET"] }, { cantidad:4 } ], 
+		detalles: [ { años_estudio:5, experiencia:4 } ]
+	},
+	{
+		_id:6, 
+		estructura: [ { profesional : [ { pack1:[{ nombre:"MARCELO", apellido:"POBLETE" }] }, 
+                                    { pack2:[{ edad:28, sexo:"M", nacionalidad:"ARGENTINA" }] } ] } ], 
+		estudios: [ { titulos : [{ nombre: ["INGENIERIA EN INFORMATICA"] }] } ],
+		certificaciones: [ { preparacion : [{ nombre: ["NO APLICA"] }]  } ],
+		especialidad:[ { detalle:["MYSQL"] }, { cantidad:0 } ], 
+		detalles: [ { años_estudio:4, experiencia:0 } ]
+	},
+	{
+		_id:7, 
+		estructura: [ { profesional : [ { pack1:[{ nombre:"ESTEFANIA", apellido:"BARRIOS" }] }, 
+                                    { pack2:[{ edad:25, sexo:"F", nacionalidad:"CHILENA" }] } ] } ], 
+		estudios: [ { titulos : [{ nombre: ["INGENIERIA EN INFORMATICA"] }] } ],
+		certificaciones: [ { preparacion : [{ nombre: ["JAVA SE","OCA"] }]  } ],
+		especialidad:[ { detalle:["DESARROLLO EN PHP","JAVA","ORACLE"] }, { cantidad:3 } ], 
+		detalles: [ { años_estudio:4, experiencia:2 } ]
+	},
+	{
+		_id:8, 
+		estructura: [ { profesional : [ { pack1:[{ nombre:"CARLOS", apellido:"PEREZ" }] }, 
+                                    { pack2:[{ edad:33, sexo:"M", nacionalidad:"ARGENTINA" }] } ] } ], 
+		estudios: [ { titulos : [{ nombre: ["ANALISTA PROGRAMADOR","INGENIERIA EN INFORMATICA"] }] } ],
+		certificaciones: [ { preparacion : [{ nombre: ["NO APLICA"] }]  } ],
+		especialidad:[ { detalle:["NO APLICA"] }, { cantidad:0 } ], 
+		detalles: [ { años_estudio:6, experiencia:6 } ]
+	},
+	{
+		_id:9, 
+		estructura: [ { profesional : [ { pack1:[{ nombre:"MARISOL", apellido:"BARRIOS" }] }, 
+                                    { pack2:[{ edad:35, sexo:"F", nacionalidad:"ARGENTINA" }] } ] } ], 
+		estudios: [ { titulos : [{ nombre: ["ANALISTA PROGRAMADOR"] }] } ],
+		certificaciones: [ { preparacion : [{ nombre: ["ZEND PHP","OCE","OCM"] }]  } ],
+		especialidad:[ { detalle:["ORACLE"] }, { cantidad:1 } ], 
+		detalles: [ { años_estudio:3, experiencia:12 } ]
+	},
+]);
+//3.Mostrar nombre y apellido de profesionales. Ordenar según apellidos y de manera ascendente
+
+db.profesionales.find(
+	{},
+	{
+		_id:0,
+		"estructura.profesional.pack1.nombre":1,
+		"estructura.profesional.pack1.apellido":1
+	}
+).sort({"estructura.profesional.pack1.apellido":1});
+
+//4.	Mostrar apellido y nombres de títulos de profesionales, pero sólo de aquellos 
+//que hayan estudiado "ANALISTA PROGRAMADOR".
+
+db.profesionales.find(
+	{"estudios.titulos.nombre":"ANALISTA PROGRAMADOR"},
+	{
+		_id:0,
+		"estructura.profesional.pack1.apellido":1,
+		"estudios.titulos.nombre":1
+	}
+);
+
+//5.	Mostrar título y especialidades de profesionales, pero de aquellos que tengan 2 especialidades o menos.
+
+db.profesionales.find(
+	{"especialidad.cantidad":{$lte:2}},
+	{
+		_id:0,
+		"estudios.titulos.nombre":1,
+		"especialidad.detalle":1
+	}
+);
+
+//6.	Mostrar id, apellido y nacionalidad de profesionales, cuya nacionalidad sea "CHILENA" o "PERUANA".
+
+db.profesionales.find(
+	{
+		$or:[
+			{"estructura.profesional.pack2.nacionalidad":"CHILENA"},
+			{"estructura.profesional.pack2.nacionalidad":"PERUANA"}
+		]
+	},
+	{_id:1,
+		"estructura.profesional.pack1.apellido":1,
+		"estructura.profesional.pack2.nacionalidad":1}
+);
+
+//7.	Mostrar apellido, edad y años de experiencia de profesionales, cuya experiencia esté entre 5 y 10 años (incluyendo extremos). Ordene según apellido de manera descendente.
+
+db.profesionales.find(
+	{"detalles.experiencia":{$lte:10,$gte:5}},
+	{_id:0,
+		"estructura.profesional.pack1.apellido":1,
+		"estructura.profesional.pack2.edad":1,
+		"detalles.experiencia":1},
+).sort({"estructura.profesional.pack1.apellido":-1});
+
+//8.	Mostrar id, nombres de títulos, preparación y años de experiencia, solo deben aparecen los primeros 4 profesionales. Cambiar nombres de campos al momento de presentar los datos en pantalla. Ordenar según id y de manera descendente.
+
+db.profesionales.aggregate(
+	{$match:{_id:{$lte:4}}},
+	{
+		$project:{
+			_id:0,
+			"Identificador":"$_id",
+			"Nombre titulos":"$estudios.titulos.nombre",
+			"Preparation":"$certificaciones.preparacion.nombre",
+			"Años de EXP":"$detalles.experiencia"
+		}
+	},
+		{$sort:{"Identificador":-1}}
+);
+
+//9.	Mostrar id, primera certificación y primera especialidad de profesionales que en dicha especialidad tengan "MYSQL" o "PHP". Ordenar según id y de manera descendente.
+
+db.profesionales.find(
+	{$or:[
+		{"especialidad.detalle":/MYSQL/},
+		{"especialidad.detalle":/PHP/}
+	]},
+	{_id:1,
+		"certificaciones.preparacion.nombre":{$slice:[0,1]},
+		"especialidad.detalle":{$slice:[0,1]}}
+).sort({_id:-1});
+
+//10.	Mostrar suma de edades de todos los profesionales de sexo "F".
+
+db.profesionales.aggregate(
+	{$unwind:"$estructura"},
+	{$unwind:"$estructura.profesional"},
+	{$unwind:"$estructura.profesional.pack2"},
+	{
+		$match:{"estructura.profesional.pack2.sexo":"F"}
+	},
+	{
+		$group:{
+			_id:"",
+			"SUMA EDADES":{$sum:"$estructura.profesional.pack2.edad"}
+		}
+	}
+);
+
+//11.	Mostrar la nacionalidad de los profesionales, indicando la cantidad que hay de cada una (cantidad de CHILENA, PERUANA, ARGENTINA, etc). Ordenar según cantidad de manera descendente.
+
+db.profesionales.aggregate(
+	{$unwind:"$estructura"},
+	{$unwind:"$estructura.profesional"},
+	{$unwind:"$estructura.profesional.pack2"},
+	{
+		$group:{
+			_id:"$estructura.profesional.pack2.nacionalidad",
+			"Cantidad":{$sum:1},
+		}
+	},
+	{$sort:{"Cantidad":-1}}
+);
+
+//12.	Mostrar nombres de certificaciones, indicando, además, la cantidad que hay de cada una.
+
+db.profesionales.aggregate(
+	{$unwind:"$certificaciones"},
+	{$unwind:"$certificaciones.preparacion"},
+	{$unwind:"$certificaciones.preparacion.nombre"},
+	{
+		$group:{
+			_id:"$certificaciones.preparacion.nombre",
+			"Cantidad":{$sum:1},
+		}
+	}
+);
+
+//13.	Cambie el nombre del campo "especialidad" dejándolo como "dominio".
+
+db.profesionales.update(
+	{},
+	{
+		$rename:{"especialidad":"dominio"}
+		},false,true
+);
+
+//14.	Eliminar todos los profesionales que actualmente no tengan certificaciones, es decir, "NO APLICA".
+
+db.profesionales.deleteMany(
+	{"certificaciones.preparacion.nombre":"NO APLICA"}
+);
+
+//15.	Eliminar la colección utilizada y la Base de Datos montada en ese momento.
+
+db.profesionales.drop();
+db.dropDatabase();
